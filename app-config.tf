@@ -21,10 +21,10 @@
 
 ## App Configuration Context
 module "app_config_context" {
-  source  = "../null-context"
+  source  = "git::https://github.com/raringgroup/terraform-null-context.git?ref=v0.1.0"
   context = module.context.self
 
-  attributes      = ["appcs"]
+  attributes      = ["appcfg"]
   id_length_limit = 50
 }
 

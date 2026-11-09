@@ -31,7 +31,7 @@ variable "location" {
 
 variable "sku" {
   type        = string
-  description = "App Configuration SKU (free or standard); purge protection and soft delete need standard"
+  description = "App Configuration SKU: free, developer, standard or premium; purge protection and soft delete work only on standard"
 }
 
 variable "local_auth_enabled" {
@@ -41,7 +41,7 @@ variable "local_auth_enabled" {
 
 variable "public_network_access" {
   type        = string
-  description = "Public network access of the store: Enabled or Disabled"
+  description = "Public network access of the store: Enabled or Disabled. null leaves it Automatic, which cannot be restored once a value is set"
 }
 
 variable "purge_protection_enabled" {
@@ -51,7 +51,7 @@ variable "purge_protection_enabled" {
 
 variable "soft_delete_retention_days" {
   type        = number
-  description = "Days a deleted store is retained before purge (standard SKU only)"
+  description = "Days a deleted store is retained before purge, 1 to 7 (standard SKU only; changing it forces a new store)"
 }
 
 variable "role_assignments" {
