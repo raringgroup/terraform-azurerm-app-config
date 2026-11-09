@@ -1,6 +1,6 @@
 # app-config
 
-Creates an Azure App Configuration store with optional RBAC role assignments on it, named through the SevenPico context module.
+Creates an Azure App Configuration store with optional RBAC role assignments on it, named through the `null-context` module.
 
 ## Requirements
 
@@ -11,7 +11,21 @@ Creates an Azure App Configuration store with optional RBAC role assignments on 
 
 ## Module Priority
 
-No SevenPico, SevenPicoForks or CloudPosse module exists for Azure App Configuration, so the module uses `azurerm_app_configuration` and `azurerm_role_assignment` directly. The store name is limited to 50 characters, the Azure maximum. Naming and the enabled flag come from the context module. `_context.tf` declares the root context (`SevenPico/context/null` `2.0.0`); child contexts use the local `../null-context` module. Configuration keys and feature flags are not managed here.
+No SevenPico, SevenPicoForks or CloudPosse module exists for Azure App Configuration, so the module uses `azurerm_app_configuration` and `azurerm_role_assignment` directly. The store name is limited to 50 characters, the Azure maximum. `_context.tf` declares the root context; it and the child contexts use `git::https://github.com/raringgroup/terraform-null-context.git?ref=v0.1.0`. Configuration keys and feature flags are not managed here.
+
+## Naming
+
+The store name is built by `null-context` from the context inputs plus the type token `appcfg`. These inputs produce `appcfg-dev-upsis-ehssync-eus001`:
+
+```hcl
+inputs = {
+  namespace   = "upsis"
+  environment = "dev"
+  name        = "ehssync"
+  region      = "eus001"
+  label_order = ["attributes", "environment", "namespace", "name", "region"]
+}
+```
 
 ## Inputs
 
@@ -21,11 +35,11 @@ All inputs are required (no defaults). Context inputs (`enabled`, `namespace`, `
 |------|------|-------------|
 | resource_group_name | `string` | Resource group that holds the store |
 | location | `string` | Azure region |
-| sku | `string` | `free` or `standard`; purge protection and soft delete need `standard` |
+| sku | `string` | `free`, `developer`, `standard` or `premium`; purge protection and soft delete work only on `standard` |
 | local_auth_enabled | `bool` | Access-key authentication; `false` limits access to Microsoft Entra ID |
-| public_network_access | `string` | `Enabled` or `Disabled` |
-| purge_protection_enabled | `bool` | Purge protection (standard only) |
-| soft_delete_retention_days | `number` | Retention for deleted stores (standard only) |
+| public_network_access | `string` | `Enabled` or `Disabled`. `null` leaves it Automatic, which cannot be restored once a value is set |
+| purge_protection_enabled | `bool` | Purge protection (`standard` only) |
+| soft_delete_retention_days | `number` | Days a deleted store is retained, 1 to 7 (`standard` only; changing it forces a new store) |
 | role_assignments | `map(object)` | RBAC assignments on the store: `principal_id`, `role_definition_name` |
 
 ## Outputs
@@ -40,35 +54,28 @@ All inputs are required (no defaults). Context inputs (`enabled`, `namespace`, `
 
 ```hcl
 terraform {
-  source = "git::<repo-url>//modules/app-config?ref=app-config-v<version>"
-}
-
-dependency "resource_group" {
-  config_path = "../resource-group"
-}
-
-dependency "app_service" {
-  config_path = "../app-service"
+  source = "git::https://github.com/raringgroup/terraform-azurerm-app-config.git?ref=develop"
 }
 
 inputs = {
   enabled     = true
   namespace   = "<namespace>"
   environment = "<environment>"
-  stage       = "<stage>"
   name        = "<name>"
+  region      = "<region-code>"
+  label_order = ["attributes", "environment", "namespace", "name", "region"]
 
   local_auth_enabled         = false
-  location                   = dependency.resource_group.outputs.location
+  location                   = "<azure-region>"
   public_network_access      = "Enabled"
   purge_protection_enabled   = false
-  resource_group_name        = dependency.resource_group.outputs.name
+  resource_group_name        = "<resource-group>"
   sku                        = "standard"
   soft_delete_retention_days = 7
 
   role_assignments = {
     "app-data-reader" = {
-      principal_id         = dependency.app_service.outputs.principal_id
+      principal_id         = "<principal-id>"
       role_definition_name = "App Configuration Data Reader"
     }
   }
