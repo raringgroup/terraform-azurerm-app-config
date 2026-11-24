@@ -14,7 +14,7 @@
 ## limitations under the License.
 ## ----------------------------------------------------------------------------
 ##
-##  modules/app-config/_variables.tf
+##  _variables.tf
 ##
 ##  Input variables for the App Configuration module.
 ## ----------------------------------------------------------------------------
