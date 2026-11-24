@@ -16,7 +16,7 @@
 ## limitations under the License.
 ## ----------------------------------------------------------------------------
 ##
-##  modules/app-config/_data.tf
+##  _data.tf
 ##
 ##  Azure caller identity and subscription lookups, exposed as locals.
 ## ----------------------------------------------------------------------------

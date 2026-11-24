@@ -16,12 +16,12 @@
 
 # TERRAGRUNT — APP CONFIG EXAMPLE
 # ------------------------------------------------------------------------------
-# modules/app-config/examples/complete/terragrunt.hcl
+# examples/complete/terragrunt.hcl
 #
 # Deploys the app-config example to Azure. Generates the azurerm provider and
 # backend and passes the standard context inputs.
 #
-# Module: modules/app-config
+# Module: terraform-azurerm-app-config
 # ------------------------------------------------------------------------------
 
 locals {

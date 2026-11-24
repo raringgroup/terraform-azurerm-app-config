@@ -14,7 +14,7 @@
 ## limitations under the License.
 ## ----------------------------------------------------------------------------
 ##
-##  modules/app-config/_outputs.tf
+##  _outputs.tf
 ##
 ##  Output values for the App Configuration module.
 ## ----------------------------------------------------------------------------

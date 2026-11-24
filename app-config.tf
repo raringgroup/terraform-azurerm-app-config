@@ -14,7 +14,7 @@
 ## limitations under the License.
 ## ----------------------------------------------------------------------------
 ##
-##  modules/app-config/app-config.tf
+##  app-config.tf
 ##
 ##  Azure App Configuration store with optional RBAC role assignments.
 ## ----------------------------------------------------------------------------
