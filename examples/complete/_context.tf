@@ -1,5 +1,5 @@
 ## ----------------------------------------------------------------------------
-##  Copyright 2023 SevenPico, Inc.
+##  Copyright 2026 Raring Group LLC
 ##  Copyright 2020 Cloud Posse, LLC
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");

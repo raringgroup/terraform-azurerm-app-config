@@ -84,4 +84,6 @@ inputs = {
 
 ## License
 
-Apache License 2.0. Copyright 2026 Raring Group LLC.
+Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
+
+`_context.tf` is derived from the upstream [cloudposse/terraform-null-label](https://github.com/cloudposse/terraform-null-label) module by Cloud Posse, LLC.
